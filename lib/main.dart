@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'screens/cadastro_screen.dart';
+
 
 void main() => runApp(const RecipApp());
 
@@ -133,7 +135,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             const Text('Não possui conta?'),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                                );
+                              },
                               child: const Text('Cadastre-se'),
                             ),
                           ],
