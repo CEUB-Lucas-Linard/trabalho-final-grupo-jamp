@@ -1,4 +1,4 @@
-# projeto_recip
+# grupo_jamp
 
 A new Flutter project.
 

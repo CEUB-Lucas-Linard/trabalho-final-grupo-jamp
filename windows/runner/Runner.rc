@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.sempreceub" "\0"
-            VALUE "FileDescription", "projeto_recip" "\0"
+            VALUE "CompanyName", "com.example" "\0"
+            VALUE "FileDescription", "grupo_jamp" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "projeto_recip" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 com.sempreceub. All rights reserved." "\0"
-            VALUE "OriginalFilename", "projeto_recip.exe" "\0"
-            VALUE "ProductName", "projeto_recip" "\0"
+            VALUE "InternalName", "grupo_jamp" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
+            VALUE "OriginalFilename", "grupo_jamp.exe" "\0"
+            VALUE "ProductName", "grupo_jamp" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
