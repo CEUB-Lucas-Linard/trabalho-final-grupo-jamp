@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'reset_password.dart';
+import 'home_screen.dart';
+import 'cadastro_screen.dart';
 
 void main() => runApp(const RecipApp());
 
@@ -147,11 +149,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                // Se os campos estão preenchidos, prossiga com login
-                                // Aqui você colocaria sua lógica de autenticação
-                                debugPrint("Login autorizado");
+                                // Aqui pode adicionar sua lógica de autenticação real futuramente
+
+                                // Navegar para a tela principal após o login
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => RecipeListScreen()),
+                                );
                               }
                             },
+
                             child: const Text('Entrar', style: TextStyle(fontSize: 18, color: Colors.white)),
                           ),
                           const SizedBox(height: 16),
@@ -160,8 +167,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               const Text('Não possui conta?'),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                                  );
+                                },
                                 child: const Text('Cadastre-se'),
+
                               ),
                             ],
                           ),
