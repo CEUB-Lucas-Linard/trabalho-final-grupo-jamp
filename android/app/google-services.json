@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1025147616479",
+    "project_id": "recipapp-c7551",
+    "storage_bucket": "recipapp-c7551.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025147616479:android:5755823018c61dd3183d6a",
+        "android_client_info": {
+          "package_name": "com.grupojamp.recip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTYvZHqQP_XjQtCKFEG2h7t71n1HDH3aI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
