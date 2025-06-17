@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'adicionar_receita_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RecipeListScreen extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
   String selectedCategory = 'Todos';
   List<Map<String, dynamic>> recipes = [];
 
-  List<String> categories = ['Todos', 'Sobremesa', 'Prato Principal', 'Vegetariano'];
+  List<String> categories = ['Todos', 'Sobremesa', 'Prato Principal', 'Vegetariano','Favoritos'];
 
   @override
   void initState() {
@@ -21,11 +22,35 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
   }
 
   Future<void> fetchRecipes() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
     final snapshot = await FirebaseFirestore.instance.collection('receitas').get();
+    final favSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('favorites')
+        .get();
+    final noteSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('notes')
+        .get();
+
+    final favoriteIds = favSnapshot.docs.map((doc) => doc.id).toSet();
+    final notes = {
+      for (var doc in noteSnapshot.docs) doc.id: doc['note']
+    };
+
     final data = snapshot.docs.map((doc) {
       final r = doc.data();
-      r['id'] = doc.id;
-      return r;
+      final id = doc.id;
+      return {
+        ...r,
+        'id': id,
+        'isFavorite': favoriteIds.contains(id),
+        'note': notes[id] ?? '',
+      };
     }).toList();
 
     setState(() {
@@ -33,20 +58,46 @@ class _RecipeListScreenState extends State<RecipeListScreen> {
     });
   }
 
-  Future<void> toggleFavorite(String id, bool newValue) async {
-    await FirebaseFirestore.instance.collection('receitas').doc(id).update({'isFavorite': newValue});
-    fetchRecipes();
+
+  Future<void> toggleFavorite(String recipeId, bool newValue) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final favRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('favorites')
+        .doc(recipeId);
+
+    if (newValue) {
+      await favRef.set({'isFavorite': true});
+    } else {
+      await favRef.delete();
+    }
+
+    fetchRecipes(); // Atualiza a lista com o novo estado
   }
 
-  Future<void> updateNote(String id, String note) async {
-    await FirebaseFirestore.instance.collection('receitas').doc(id).update({'note': note});
+  Future<void> updateNote(String recipeId, String note) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('notes')
+        .doc(recipeId)
+        .set({'note': note});
   }
 
   @override
   Widget build(BuildContext context) {
     final filteredRecipes = recipes.where((recipe) {
       final matchesTitle = recipe['title'].toLowerCase().contains(searchQuery.toLowerCase());
-      final matchesCategory = selectedCategory == 'Todos' || recipe['category'] == selectedCategory;
+      final matchesCategory =
+          selectedCategory == 'Todos' ||
+              (selectedCategory == 'Favoritos' && recipe['isFavorite']) ||
+              recipe['category'] == selectedCategory;
       return matchesTitle && matchesCategory;
     }).toList();
 
