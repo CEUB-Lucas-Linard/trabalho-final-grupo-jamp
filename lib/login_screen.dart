@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'reset_password.dart';
 import 'cadastro_screen.dart';
 import 'recipe_list_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -114,9 +115,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RecipeListScreen()));
+                                try {
+                                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                    email: _emailController.text.trim(),
+                                    password: _passwordController.text.trim(),
+                                  );
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => RecipeListScreen()),
+                                  );
+                                } on FirebaseAuthException catch (e) {
+                                  String message = 'Erro ao fazer login';
+                                  if (e.code == 'user-not-found') {
+                                    message = 'Usuário não encontrado';
+                                  } else if (e.code == 'wrong-password') {
+                                    message = 'Senha incorreta';
+                                  }
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+                                }
                               }
                             },
                             child: const Text('Entrar', style: TextStyle(fontSize: 18, color: Colors.white)),

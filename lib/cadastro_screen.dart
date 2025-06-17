@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login_screen.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -145,11 +148,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Cadastro realizado com sucesso!')),
-                                );
+                                try {
+                                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                    email: _emailController.text.trim(),
+                                    password: _passwordController.text.trim(),
+                                  );
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                                  );
+                                } on FirebaseAuthException catch (e) {
+                                  String message = 'Erro ao cadastrar';
+                                  if (e.code == 'email-already-in-use') {
+                                    message = 'E-mail já em uso';
+                                  } else if (e.code == 'weak-password') {
+                                    message = 'Senha muito fraca';
+                                  }
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+                                }
                               }
                             },
                             child: const Text(
