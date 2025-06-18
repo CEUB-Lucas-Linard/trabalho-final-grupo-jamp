@@ -18,6 +18,15 @@ Este projeto demonstra boas práticas de UI/UX em Flutter e serve como uma base 
 * **Flutter:** Framework principal de desenvolvimento do aplicativo, garantindo uma experiência de usuário fluida.
 * **Dart:** Linguagem de programação utilizada.
 * **Firebase:** Banco de Dados
+## Dependências
+ * flutter:
+ *   sdk: flutter
+ * firebase_core: ^2.32.0
+ * cloud_firestore: ^4.17.5
+ * image_picker: ^1.0.0
+ * uuid: ^4.0.0
+ * firebase_auth: ^4.17.0
+ * js: ^0.6.7
 
 ## 🏗️ Estrutura do Código
 
