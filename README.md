@@ -77,6 +77,6 @@ Com essas melhorias, o "Recip" tem o potencial de se tornar uma aplicação Flut
 ## 👥 Equipe
 
 1. **Arthur Lima Dantas**
-2. **João Pedro Gome Vellasco**
+2. **João Pedro Gomes de Velasco**
 3. **Miguel Araújo**
 4. **Pedro Henrique da Silva de Santana**
