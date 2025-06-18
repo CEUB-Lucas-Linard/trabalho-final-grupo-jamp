@@ -37,6 +37,30 @@ O código-fonte do "Recip" está organizado em um único arquivo, `main.dart`, e
 3.  **`RecipeListScreen`**: A tela principal do aplicativo, implementada como um `StatefulWidget`, que oferece uma interface rica para o usuário explorar receitas. As receitas são atualmente armazenadas em uma lista estática (`recipes`). Gerencia o termo de busca (`searchQuery`) e a categoria selecionada (`selectedCategory`) utilizando `setState`.
 4. **`RecipeDetailScreen`**: Este `StatefulWidget` apresenta as informações completas de uma receita selecionada. Recebe o objeto da receita da tela de listagem, e permite comunicar mudanças no status de favorito de volta para a `RecipeListScreen` através de um `onFavoriteToggle`. Utiliza um `TextEditingController` (`noteController`) para gerenciar as anotações pessoais.
 
+## 📘 Histórias de Usuário
+
+* 👩‍🍳 Como um usuário do aplicativo Recip, eu quero:
+  
+Buscar receitas pelo nome, para encontrar rapidamente o que quero cozinhar.
+
+Filtrar receitas por categoria (como "Sobremesa", "Vegetariano", etc.), para visualizar apenas o tipo de receita que estou procurando.
+
+Visualizar os detalhes de uma receita, incluindo ingredientes e modo de preparo, para saber como prepará-la corretamente.
+
+Favoritar receitas que gostei, para acessá-las com mais facilidade no futuro.
+
+Adicionar notas pessoais às receitas, como “usar menos sal” ou “preferir leite vegetal”, para personalizar minha experiência.
+
+* 👨‍💻 Como desenvolvedor do Recip, eu quero:
+  
+Armazenar e recuperar dados das receitas no Firebase, para garantir persistência e escalabilidade.
+
+Organizar o código de forma modular, para facilitar a manutenção e evolução do aplicativo.
+
+Oferecer uma interface agradável e intuitiva, para melhorar a experiência do usuário final.
+
+Adicionar novas funcionalidades facilmente, como cadastro/login ou upload de imagem de receitas no futuro.
+
 ## 🔮 Próximos Passos e Oportunidades de Melhoria
 
 Para evoluir o "Recip" para um produto de mercado de alta qualidade, as seguintes melhorias arquiteturais e de desenvolvimento são essenciais:
